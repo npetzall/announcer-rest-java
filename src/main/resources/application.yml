@@ -1,0 +1,9 @@
+auth:
+  header: Authorization
+  secret: superSecret!2!¤#
+  valid_days: 10
+  path:
+    status: /auth/status
+    claim: /auth/claim
+    revoke: /auth/revoke
+    renew: /auth/renew
