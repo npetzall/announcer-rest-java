@@ -58,7 +58,7 @@ public class AuthenticationController {
             produces = MediaType.TEXT_PLAIN_VALUE
     )
     public ResponseEntity<?> claim(@RequestBody final AuthenticationDetails authenticationDetails) {
-        LOGGER.info("Claim");
+        LOGGER.debug("Claim");
         final Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationDetails.getUser(), authenticationDetails.getPassword()));
         if (authentication.isAuthenticated()) {
             return ResponseEntity.ok(factory.newToken(authenticationDetails.getUser()));
@@ -71,7 +71,7 @@ public class AuthenticationController {
             method = RequestMethod.DELETE
     )
     public ResponseEntity<?> revoke() {
-        LOGGER.info("Revoke");
+        LOGGER.debug("Revoke");
         return ResponseEntity.notFound().build();
     }
 
@@ -80,7 +80,11 @@ public class AuthenticationController {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> renew() {
-        LOGGER.info("Renew");
-        return ResponseEntity.notFound().build();
+        LOGGER.debug("Renew");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.isAuthenticated()) {
+            return ResponseEntity.ok(factory.newToken(authentication.getPrincipal().toString()));
+        }
+        return ResponseEntity.badRequest().build();
     }
 }

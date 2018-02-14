@@ -6,11 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/worklog")
+@RequestMapping("/worklog/v1")
 public class WorkLogEntryController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> newWorkLogEntry(@RequestBody WorkLogEntry workLogEntry) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(workLogEntry);
     }
 }

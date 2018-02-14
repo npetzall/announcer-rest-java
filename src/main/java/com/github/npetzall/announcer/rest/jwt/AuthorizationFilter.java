@@ -41,7 +41,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                 TokenFacade tokenFacade = validator.validate(compactJws);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(tokenFacade.getSubject(), null, Collections.emptyList());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                logger.info("authenticated user " + tokenFacade.getSubject() + ", setting security context");
+                logger.debug("authenticated user " + tokenFacade.getSubject() + ", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (SignatureException e) {
                 LOGGER.error("Invalid token", e);
